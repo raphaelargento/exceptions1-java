@@ -25,21 +25,19 @@ public class Program {
             Reservation reservation = new Reservation(room, checkIn, checkOut);
             System.out.println("Reservation: " + reservation);
             
-            System.out.println("\nEnter data do update reservation:");
+            System.out.println("\nEnter data to update reservation:");
             System.out.print("Check-in date (dd/MM/yyyy): ");
             checkIn = sdf.parse(dataInput.next());
             System.out.print("Check-out date (dd/MM/yyyy): ");
             checkOut = sdf.parse(dataInput.next());
 
-            Date now = new Date();
-            if(checkIn.before(now) || checkOut.before(now)){
-                System.out.println("Error in reservation: Reservation dates for update must be future reservations.");
+            // In this version the validation occurs inside the updateDates method
+            // which returns a string with the error or null if everything is running correctly
+            String error = reservation.updateDates(checkIn, checkOut);
+            if (error != null){
+                System.out.println("Error in reservation: " + error);
             }
-            else if(!checkOut.after(checkIn)){
-                    System.out.println("Error in reservation: Check-out date must be after check-in date");
-            }
-            else {        
-                reservation.updateDate(checkIn, checkOut);
+            else {
                 System.out.println("Reservation: " + reservation);
             }
         }
